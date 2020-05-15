@@ -1,0 +1,2 @@
+#include <ApplicationClientCore_global.h>
+#include "ApplicationClient.h"
