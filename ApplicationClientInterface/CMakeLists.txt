@@ -1,3 +1,4 @@
+include(../../QxOrm/QxOrm.cmake)
 set(target "ApplicationClientInterface")
 
 add_definitions(-DBUILDAPPLICATIONCLIENTINTERFACE)
@@ -45,7 +46,7 @@ set_property(TARGET ${target} APPEND PROPERTY PROPERTIES
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     )
-install(TARGETS ${target} EXPORT ApplicationClient 
+install(TARGETS ${target}
 LIBRARY DESTINATION "${LIB_FOLDER}"
     ARCHIVE DESTINATION "${LIB_FOLDER}"
     RUNTIME DESTINATION "${EXEC_FOLDER}"

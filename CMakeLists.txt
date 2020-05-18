@@ -23,9 +23,3 @@ add_subdirectory(ApplicationClient)
 if(${PACKAGE})
 include("Package.cmake")
 endif()
-
-
-install(
-  EXPORT ApplicationClient
-  DESTINATION ${LIB_FOLDER}
-  )

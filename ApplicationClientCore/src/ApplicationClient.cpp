@@ -6,7 +6,8 @@
 #include <QLibraryInfo>
 #include <QPluginLoader>
 #include <QxOrm.h>
-#include <QxConnect.h>
+#include <QxServices.h>
+#include <QxOrm.h>
 ApplicationClient::ApplicationClient(QObject *parent) :
 		ApplicationClientInterface(parent) {
 }

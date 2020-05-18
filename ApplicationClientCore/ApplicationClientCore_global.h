@@ -2,7 +2,6 @@
 #define APPLICATIONCLIENTCORE_GLOBAL_H
 
 #include <QtCore/qglobal.h>
-#include <QxOrm.h>
 
 #if defined(APPLICATIONCLIENTCORE_LIBRARY)
 #  define APPLICATIONCLIENTCORE_EXPORT Q_DECL_EXPORT
