@@ -20,6 +20,7 @@ void ApplicationClient::initialize() {
 	// Init parameters to connect to database
 	qx::service::QxConnect::getSingleton()->setIp("localhost");
 	qx::service::QxConnect::getSingleton()->setPort(8001);
+	qx::service::QxConnect::getSingleton()->setMaxWait(600000);
 	qx::service::QxConnect::getSingleton()->setSerializationType(qx::service::QxConnect::serialization_json);
 
 	QDir pluginsDir = QDir(QCoreApplication::applicationDirPath());
