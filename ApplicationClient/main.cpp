@@ -1,17 +1,21 @@
 #include <ApplicationClientCore>
 #include <QCoreApplication>
+#include <QGuiApplication>
 #include <QTimer>
+#include <QQmlApplicationEngine>
+int main(int argc, char *argv[]) {
+	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-int main(int argc, char *argv[])
-{
-    QCoreApplication a(argc, argv);
-    qDebug() << QCoreApplication::applicationDirPath();
-    ApplicationClient* app = new ApplicationClient(&a);
-    // This will cause the application to exit when
-    // the task signals finished.
-    QObject::connect(app, SIGNAL(finished()), &a, SLOT(quit()));
+	QGuiApplication a(argc, argv);
 
-    // This will run the task from the application event loop.
-    QTimer::singleShot(0, app, SLOT(start()));
-    return a.exec();
+	qDebug() << QCoreApplication::applicationDirPath();
+	ApplicationClient *app = ApplicationClient::instance();
+	// This will cause the application to exit when
+	// the task signals finished.
+	QObject::connect(app, SIGNAL(finished()), &a, SLOT(quit()));
+
+	// This will run the task from the application event loop.
+	app->start();
+	//QTimer::singleShot(0, app, SLOT(start()));
+	return a.exec();
 }

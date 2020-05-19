@@ -2,6 +2,7 @@
 
 
 #include <QCoreApplication>
+#include <QGuiApplication>
 #include <QDir>
 #include <QLibraryInfo>
 #include <QPluginLoader>
@@ -9,11 +10,29 @@
 #include <QxServices.h>
 #include <QxOrm.h>
 #include <QxService/QxConnect.h>
-ApplicationClient::ApplicationClient(QObject *parent) :
-		ApplicationClientInterface(parent) {
+#include <QQuickView>
+#include <QtQml>
+ApplicationClient::ApplicationClient() :
+		ApplicationClientInterface(nullptr) {
+    this->view = new QQuickView;
 }
+
 void ApplicationClient::start() {
 	this->initialize();
+	qmlRegisterSingletonType("com.applicationclient", 1, 0, "App", [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QJSValue {
+	    Q_UNUSED(engine)
+    	    QJSValue instance = scriptEngine->newQObject(ApplicationClient::instance());
+    	    return instance;
+	});
+
+    this->view->setFlags(Qt::FramelessWindowHint);
+    this->view->setWindowStates(Qt::WindowFullScreen);
+    this->view->setSource(QUrl(QStringLiteral("qrc:/main.qml")));
+    this->view->showFullScreen();
+}
+
+void ApplicationClient::close(){
+	this->view->close();
 }
 
 void ApplicationClient::initialize() {
@@ -42,7 +61,6 @@ void ApplicationClient::initialize() {
 			qDebug() << exc->what();
 		}
 	}
-	emit startInput();
 }
 
 QObject * ApplicationClient::getValue(QString valueName){

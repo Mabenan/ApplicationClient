@@ -5,6 +5,8 @@ set(target "ApplicationClientCore")
 add_definitions(-DAPPLICATIONCLIENTCORE_LIBRARY)
 add_definitions(-D_QX_ENABLE_QT_NETWORK)
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -26,14 +28,17 @@ ENDFOREACH()
 FOREACH(src ${SRC})
   message(${src})
 ENDFOREACH()
-add_library(${target} SHARED ${SRC})
+add_library(${target} SHARED ${SRC} ${RSC})
 target_precompile_headers(${target}
  PUBLIC
   "ApplicationClientCore_global.h"
  )
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 find_package(Qt5Core REQUIRED)
-qt5_use_modules(${target} Core)
+find_package(Qt5Gui REQUIRED)
+find_package(Qt5Qml REQUIRED)
+find_package(Qt5Quick REQUIRED)
+qt5_use_modules(${target} Core Gui Qml Quick)
 target_link_libraries(${target} ApplicationClientInterface QxOrm)
 target_include_directories(${target}
  PUBLIC 
