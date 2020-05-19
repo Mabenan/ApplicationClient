@@ -8,6 +8,7 @@
 #include <QxOrm.h>
 #include <QxServices.h>
 #include <QxOrm.h>
+#include <QxService/QxConnect.h>
 ApplicationClient::ApplicationClient(QObject *parent) :
 		ApplicationClientInterface(parent) {
 }
