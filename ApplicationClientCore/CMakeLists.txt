@@ -9,30 +9,11 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-MACRO(SUBDIRLIST result curdir)
-  FILE(GLOB children RELATIVE ${curdir} ${curdir}/*)
-  SET(dirlist "")
-  FOREACH(child ${children})
-    IF(IS_DIRECTORY ${curdir}/${child})
-      LIST(APPEND dirlist ${curdir}/${child})
-    ENDIF()
-  ENDFOREACH()
-  SET(${result} ${dirlist})
-ENDMACRO()
-SUBDIRLIST(SUBDIRS ${CMAKE_CURRENT_SOURCE_DIR})
-FOREACH(subdir ${SUBDIRS})
-  ADD_SUBDIRECTORY(${subdir})
-ENDFOREACH()
-
-FOREACH(src ${SRC})
-  message(${src})
-ENDFOREACH()
+add_subdirectory(include)
+add_subdirectory(rsrc)
+add_subdirectory(src)
+add_subdirectory(ui)
 add_library(${target} SHARED ${SRC} ${RSC})
-target_precompile_headers(${target}
- PUBLIC
-  "ApplicationClientCore_global.h"
- )
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
@@ -40,6 +21,10 @@ find_package(Qt5Qml REQUIRED)
 find_package(Qt5Quick REQUIRED)
 qt5_use_modules(${target} Core Gui Qml Quick)
 target_link_libraries(${target} ApplicationClientInterface QxOrm)
+target_precompile_headers(${target}
+ PUBLIC
+  "ApplicationClientCore.Precompiled.h"
+ )
 target_include_directories(${target}
  PUBLIC 
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
