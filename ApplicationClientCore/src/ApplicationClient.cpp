@@ -23,11 +23,9 @@ void ApplicationClient::start() {
         return instance;
       });
 
-  this->view->setFlags(Qt::FramelessWindowHint | Qt::WindowMinimizeButtonHint |
-                       Qt::WindowSystemMenuHint);
-  // this->view->setWindowStates(Qt::WindowFullScreen);
+  this->view->setFlags(Qt::Window | Qt::WindowMinMaxButtonsHint | Qt::WindowSystemMenuHint | Qt::FramelessWindowHint);
   this->view->setSource(QUrl(QStringLiteral("qrc:/main.qml")));
-  this->view->showFullScreen();
+  this->view->showMaximized();
 }
 
 void ApplicationClient::close() { this->view->close(); }
