@@ -2,23 +2,33 @@
 #define APPLICATION_H
 
 #include "ApplicationClientCore_global.h"
+#include <ApplicationClientCore.Precompiled.h>
 #include <ApplicationClientInterface>
 #include <QDebug>
 #include <QMap>
 #include <QObject>
 #include <QQuickView>
 #include <QThread>
+#include <QQmlApplicationEngine>
+#include <ButtonModel.h>
+#include <DashboardModel.h>
 
 class APPLICATIONCLIENTCORE_EXPORT ApplicationClient
     : public ApplicationClientInterface {
   Q_OBJECT
+  Q_PROPERTY(QVariant buttonModel READ buttonModel)
+
+    Q_PROPERTY(QVariant dashboardModel READ dashboardModel)
 private:
   QMap<QString, QObject *> genericValues;
   QMap<QString, QList<QObject *>> genericListValues;
   explicit ApplicationClient(QObject *parent = nullptr);
   static ApplicationClient *_instance;
-  QQuickView *view;
+
   QThread inputThread;
+  QQmlApplicationEngine engine;
+  ButtonModel m_buttonModel;
+  DashboardModel m_dashboardModel;
 
 public:
   void handleUserInput(QString);
@@ -32,6 +42,15 @@ public:
       _instance = new ApplicationClient();
     return _instance;
   }
+
+  QVariant buttonModel(){
+      return QVariant::fromValue(&m_buttonModel);
+  }
+
+  QVariant dashboardModel(){
+      return QVariant::fromValue(&m_dashboardModel);
+  }
+
 Q_SIGNALS:
   void finished();
 public Q_SLOTS:
@@ -41,8 +60,10 @@ public Q_SLOTS:
   // ApplicationClientInterface interface
 public:
   QObject *getValue(QString valueName) override;
+
+  // ApplicationClientInterface interface
+public:
+  void addDashboardItem(DashboardItem *item) override;
+  void addSideMenuButton(Button *button) override;
 };
-#if defined(APPLICATIONCLIENTCORE_LIBRARY)
-ApplicationClient *ApplicationClient::_instance = 0;
-#endif
 #endif // APPLICATION_H

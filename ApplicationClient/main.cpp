@@ -17,5 +17,5 @@ int main(int argc, char *argv[]) {
   // This will run the task from the application event loop.
   app->start();
   // QTimer::singleShot(0, app, SLOT(start()));
-  return QGuiApplication::exec();
+  return a.exec();
 }

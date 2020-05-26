@@ -7,28 +7,26 @@
 #include <QPluginLoader>
 #include <QQuickView>
 #include <QtQml>
+#include <closebutton.h>
+
+ApplicationClient *ApplicationClient::_instance = 0;
 ApplicationClient::ApplicationClient(QObject *parent)
-    : ApplicationClientInterface(parent) {
-  this->view = new QQuickView;
+    : ApplicationClientInterface(parent)  {
+    qmlRegisterSingletonType(
+        "com.applicationclient", 1, 0, "App",
+        [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QJSValue {
+          Q_UNUSED(engine)
+          QJSValue instance =
+              scriptEngine->newQObject(ApplicationClient::instance());
+          return instance;
+        });
 }
 
 void ApplicationClient::start() {
   this->initialize();
-  qmlRegisterSingletonType(
-      "com.applicationclient", 1, 0, "App",
-      [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QJSValue {
-        Q_UNUSED(engine)
-        QJSValue instance =
-            scriptEngine->newQObject(ApplicationClient::instance());
-        return instance;
-      });
-
-  this->view->setFlags(Qt::Window | Qt::WindowMinMaxButtonsHint | Qt::WindowSystemMenuHint | Qt::FramelessWindowHint);
-  this->view->setSource(QUrl(QStringLiteral("qrc:/main.qml")));
-  this->view->showMaximized();
 }
 
-void ApplicationClient::close() { this->view->close(); }
+void ApplicationClient::close() { QGuiApplication::quit(); }
 
 void ApplicationClient::initialize() {
 
@@ -57,6 +55,8 @@ void ApplicationClient::initialize() {
       qDebug() << exc->what();
     }
   }
+  this->m_buttonModel.AddButton(new CloseButton());
+  this->engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 }
 
 QObject *ApplicationClient::getValue(QString valueName) {
@@ -85,6 +85,18 @@ void ApplicationClient::addValue(QString valueName, QObject *value) {
     this->genericListValues.insert(valueName, QList<QObject *>());
   }
   this->genericListValues[valueName].append(value);
+}
+
+
+
+void ApplicationClient::addDashboardItem(DashboardItem *item)
+{
+    this->m_dashboardModel.AddItem(item);
+}
+
+void ApplicationClient::addSideMenuButton(Button *button)
+{
+    this->m_buttonModel.AddButton(button);
 }
 
 #include "moc_ApplicationClient.cpp"

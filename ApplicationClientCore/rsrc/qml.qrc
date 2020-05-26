@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>controls/SideMenu.qml</file>
+        <file>menu.png</file>
+        <file>controls/Dashboard.qml</file>
     </qresource>
 </RCC>
