@@ -29,6 +29,7 @@ private:
   QQmlApplicationEngine engine;
   ButtonModel m_buttonModel;
   DashboardModel m_dashboardModel;
+  QMap<QString, ApplicationClientPluginInterface* > plugins;
 
 public:
   void handleUserInput(QString);
@@ -56,6 +57,7 @@ Q_SIGNALS:
 public Q_SLOTS:
   void start();
   void close();
+  void checkScreen(QQuickWindow * window);
 
   // ApplicationClientInterface interface
 public:
@@ -65,5 +67,14 @@ public:
 public:
   void addDashboardItem(DashboardItem *item) override;
   void addSideMenuButton(Button *button) override;
+
+  // ApplicationClientInterface interface
+public:
+  void removeDashboardItem(DashboardItem *item) override;
+  void removeSideMenuButton(Button *item) override;
+
+  // ApplicationClientInterface interface
+public:
+  ApplicationClientPluginInterface *GetPlugin(const QString &pluginName) override;
 };
 #endif // APPLICATION_H

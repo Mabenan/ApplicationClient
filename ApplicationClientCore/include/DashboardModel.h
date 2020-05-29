@@ -14,6 +14,7 @@ public:
     DashboardModel(QObject *parent = nullptr);
 
     void AddItem(DashboardItem *item);
+    void RemoveItem(DashboardItem *item);
 
     int rowCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex &index, int role) const override;

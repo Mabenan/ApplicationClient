@@ -15,6 +15,7 @@ public:
     ButtonModel(QObject *parent = nullptr);
 
     void AddButton(Button *button);
+    void RemoveButton(Button *button);
 
     int rowCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex &index, int role) const override;

@@ -19,6 +19,7 @@ public:
   ~ApplicationClientPluginInterface() override = default;
   virtual void init(ApplicationClientInterface *app) = 0;
   virtual void install(ApplicationClientInterface *app) = 0;
+  virtual const QString getName() = 0;
 };
 
 Q_DECLARE_INTERFACE(ApplicationClientPluginInterface,

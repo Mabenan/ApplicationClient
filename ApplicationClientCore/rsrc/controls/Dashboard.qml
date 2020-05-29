@@ -5,7 +5,7 @@ import com.applicationclient 1.0 as AppClient
 Rectangle {
     visible: true
     ListView {
-        id: buttonList
+        id: dashboardView
         anchors.rightMargin: 8
         anchors.leftMargin: 8
         anchors.bottomMargin: 8
@@ -13,8 +13,13 @@ Rectangle {
         anchors.fill: parent
         model: AppClient.App.dashboardModel
         delegate: Loader {
-            anchors.fill: parent
                    id: myLoader
+                   onLoaded: {
+                       if(typeof myLoader.item.setDashboard === 'function'){
+                       myLoader.item.setDashboard(edit);
+                       }
+                   }
+
                    source: edit.source
         }
     }

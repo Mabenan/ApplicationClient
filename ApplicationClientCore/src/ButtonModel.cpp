@@ -9,6 +9,14 @@ void ButtonModel::AddButton(Button *button)
     this->buttons.append(button);
 }
 
+void ButtonModel::RemoveButton(Button *button)
+{
+    int index = this->buttons.indexOf(button);
+    beginRemoveRows(QModelIndex(), index, index);
+    this->buttons.removeOne(button);
+    emit endRemoveRows();
+}
+
 int ButtonModel::rowCount(const QModelIndex &parent) const { return this->buttons.size(); }
 
 QVariant ButtonModel::data(const QModelIndex &index, int role) const {

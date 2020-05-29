@@ -17,7 +17,15 @@ return this->items.size();
 
 void DashboardModel::AddItem(DashboardItem *item)
 {
-this->items.append(item);
+    this->items.append(item);
+}
+
+void DashboardModel::RemoveItem(DashboardItem *item)
+{
+    int index = this->items.indexOf(item);
+    beginRemoveRows(QModelIndex(), index, index);
+    this->items.removeOne(item);
+    emit endRemoveRows();
 }
 
 DashboardModel::DashboardModel(QObject *parent) : QAbstractListModel(parent)

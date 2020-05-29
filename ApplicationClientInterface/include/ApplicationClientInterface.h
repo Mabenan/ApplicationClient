@@ -6,6 +6,7 @@
 #include <QString>
 #include <Button.h>
 #include <DashboardItem.h>
+class ApplicationClientPluginInterface;
 class APPLICATION_CLIENT_INTERFACE ApplicationClientInterface : public QObject {
   Q_OBJECT
 public:
@@ -20,7 +21,11 @@ public:
   virtual void addValue(QString valueName, QObject *value) = 0;
 
   virtual void addDashboardItem(DashboardItem * item) = 0;
+  virtual void removeDashboardItem(DashboardItem * item) = 0;
   virtual void addSideMenuButton(Button * button) = 0;
+  virtual void removeSideMenuButton(Button * item) = 0;
+
+  virtual ApplicationClientPluginInterface * GetPlugin(const QString &pluginName) = 0;
 };
 
 #endif // APPLICATIONClientINTERFACE_H

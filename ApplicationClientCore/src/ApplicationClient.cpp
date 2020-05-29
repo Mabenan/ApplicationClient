@@ -8,7 +8,7 @@
 #include <QQuickView>
 #include <QtQml>
 #include <closebutton.h>
-
+#include <QScreen>
 ApplicationClient *ApplicationClient::_instance = 0;
 ApplicationClient::ApplicationClient(QObject *parent)
     : ApplicationClientInterface(parent)  {
@@ -27,6 +27,24 @@ void ApplicationClient::start() {
 }
 
 void ApplicationClient::close() { QGuiApplication::quit(); }
+
+void ApplicationClient::checkScreen(QQuickWindow *window)
+{
+    QPoint windowPosition = window->position();
+    QScreen *screen = QGuiApplication::screenAt(window->position());
+    if(screen != nullptr){
+    if(screen != window->screen()){
+        window->setScreen(screen);
+    }
+    windowPosition = window->position();
+    if(windowPosition.y() <= 0){
+        window->setVisibility(QQuickWindow::Maximized);
+        windowPosition.setX(screen->geometry().right());
+        windowPosition.setY(screen->geometry().top());
+    }
+    }
+
+}
 
 void ApplicationClient::initialize() {
 
@@ -50,6 +68,7 @@ void ApplicationClient::initialize() {
       if (pluginInterface) {
         pluginInterface->install(this);
         pluginInterface->init(this);
+        plugins.insert(pluginInterface->getName(), pluginInterface);
       }
     } catch (std::exception *exc) {
       qDebug() << exc->what();
@@ -97,6 +116,27 @@ void ApplicationClient::addDashboardItem(DashboardItem *item)
 void ApplicationClient::addSideMenuButton(Button *button)
 {
     this->m_buttonModel.AddButton(button);
+}
+
+
+void ApplicationClient::removeDashboardItem(DashboardItem *item)
+{
+    this->m_dashboardModel.RemoveItem(item);
+}
+
+void ApplicationClient::removeSideMenuButton(Button *item)
+{
+    this->m_buttonModel.RemoveButton(item);
+}
+
+
+ApplicationClientPluginInterface *ApplicationClient::GetPlugin(const QString &pluginName)
+{
+    if(this->plugins.contains(pluginName)){
+        return this->plugins.value(pluginName);
+    }else{
+        return nullptr;
+    }
 }
 
 #include "moc_ApplicationClient.cpp"
