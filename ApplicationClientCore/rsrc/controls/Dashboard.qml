@@ -13,6 +13,8 @@ Rectangle {
         anchors.fill: parent
         model: AppClient.App.dashboardModel
         delegate: Loader {
+                   width: childrenRect.width
+                   height: childrenRect.height
                    id: myLoader
                    onLoaded: {
                        if(typeof myLoader.item.setDashboard === 'function'){
