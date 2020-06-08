@@ -21,7 +21,7 @@ Rectangle {
             Button {
 
                     anchors.fill: parent
-                    text: edit.name
+                    text: model.display.name
                     onClicked: {
                         edit.click();
                     }

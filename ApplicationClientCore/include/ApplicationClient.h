@@ -12,6 +12,7 @@
 #include <QQmlApplicationEngine>
 #include <ButtonModel.h>
 #include <DashboardModel.h>
+#include <QxModelView.h>
 
 class APPLICATIONCLIENTCORE_EXPORT ApplicationClient
     : public ApplicationClientInterface {
@@ -43,6 +44,8 @@ public:
       _instance = new ApplicationClient();
     return _instance;
   }
+
+  Q_INVOKABLE QVariant makeAccisable(QString column,int row, qx::IxModel * model);
 
   QVariant buttonModel(){
       return QVariant::fromValue(&m_buttonModel);

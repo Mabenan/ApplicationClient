@@ -18,11 +18,11 @@ Rectangle {
                    id: myLoader
                    onLoaded: {
                        if(typeof myLoader.item.setDashboard === 'function'){
-                       myLoader.item.setDashboard(edit);
+                       myLoader.item.setDashboard(model.display);
                        }
                    }
 
-                   source: edit.source
+                   source: model.display.source
         }
     }
 }

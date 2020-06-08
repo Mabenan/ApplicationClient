@@ -106,6 +106,19 @@ void ApplicationClient::addValue(QString valueName, QObject *value) {
   this->genericListValues[valueName].append(value);
 }
 
+QVariant ApplicationClient::makeAccisable(QString column, int row, qx::IxModel *model)
+{
+    int index = model->getColumnIndex(column);
+    qx::IxDataMember * member = model->getDataMember(index);
+    QVariant input = model->getModelValue(row, column);
+    qx::IxFunction::type_any_params params;
+    params.push_back(input);
+    params.push_back(column);
+    qx::any anyRet;
+    qx::QxClassX::invokeStatic(member->getParent()->getClass()->getKey(), "makeAccisable",params, &anyRet);
+    return qx::any_cast<QVariant>(anyRet);
+}
+
 
 
 void ApplicationClient::addDashboardItem(DashboardItem *item)
