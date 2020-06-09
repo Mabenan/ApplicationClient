@@ -19,8 +19,8 @@ Rectangle {
         model: AppClient.App.buttonModel
         delegate:
             Button {
+                width: parent.width
 
-                    anchors.fill: parent
                     text: model.display.name
                     onClicked: {
                         edit.click();
@@ -30,8 +30,4 @@ Rectangle {
 }
 
 
-/*##^##
-Designer {
-    D{i:1;anchors_height:160;anchors_width:110;anchors_x:31;anchors_y:75}
-}
-##^##*/
+

@@ -74,7 +74,8 @@ void ApplicationClient::initialize() {
       qDebug() << exc->what();
     }
   }
-  this->m_buttonModel.AddButton(new CloseButton());
+  this->m_buttonModel.AddButton(new CloseButton("close"));
+  this->m_buttonModel.AddButton(new CloseButton("close2"));
   this->engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 }
 

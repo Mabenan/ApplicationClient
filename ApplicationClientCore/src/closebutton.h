@@ -8,8 +8,10 @@
 class CloseButton : public Button
 {
     Q_OBJECT
+private:
+    QString m_name;
 public:
-    CloseButton(QObject * parent = nullptr);
+    CloseButton(QString name, QObject * parent = nullptr);
 
     // Button interface
 public:

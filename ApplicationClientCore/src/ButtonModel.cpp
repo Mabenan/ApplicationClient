@@ -24,6 +24,6 @@ QVariant ButtonModel::data(const QModelIndex &index, int role) const {
       Button * button = this->buttons.at(index.row());
       return QVariant::fromValue(button);
   }else{
-      return NULL;
+      return QVariant();
   }
 }
