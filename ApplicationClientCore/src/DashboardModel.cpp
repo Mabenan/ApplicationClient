@@ -2,6 +2,7 @@
 
 QVariant DashboardModel::data(const QModelIndex &index, int role) const
 {
+
     if(index.isValid()){
         DashboardItem * item = this->items.at(index.row());
         return QVariant::fromValue(item);
