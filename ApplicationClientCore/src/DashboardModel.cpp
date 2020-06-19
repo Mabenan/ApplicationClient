@@ -1,5 +1,4 @@
 #include <DashboardModel.h>
-
 QVariant DashboardModel::data(const QModelIndex &index, int role) const
 {
 
@@ -18,7 +17,9 @@ return this->items.size();
 
 void DashboardModel::AddItem(DashboardItem *item)
 {
+    beginInsertRows(QModelIndex(), this->items.length(), this->items.length());
     this->items.append(item);
+    emit endInsertRows();
 }
 
 void DashboardModel::RemoveItem(DashboardItem *item)

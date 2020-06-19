@@ -24,6 +24,7 @@ Rectangle {
                     text: model.display.name
                     onClicked: {
                         edit.click();
+                        sideMenu.visible = false;
                     }
                 }
     }
