@@ -24,6 +24,9 @@ public:
   virtual void removeDashboardItem(DashboardItem * item) = 0;
   virtual void addSideMenuButton(Button * button) = 0;
   virtual void removeSideMenuButton(Button * item) = 0;
+  virtual void information(const QString &title, const QString &content)= 0;
+  virtual void error(const QString &title, const QString &content)= 0;
+  virtual void warning(const QString &title, const QString &content)= 0;
 
   virtual ApplicationClientPluginInterface * GetPlugin(const QString &pluginName) = 0;
 };

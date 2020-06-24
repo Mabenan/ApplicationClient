@@ -13,24 +13,32 @@
 #include <ButtonModel.h>
 #include <DashboardModel.h>
 #include <QxModelView.h>
-
+#include <QMessageBox>
 class APPLICATIONCLIENTCORE_EXPORT ApplicationClient
     : public ApplicationClientInterface {
   Q_OBJECT
   Q_PROPERTY(QVariant buttonModel READ buttonModel)
-
-    Q_PROPERTY(QVariant dashboardModel READ dashboardModel)
+  Q_PROPERTY(QVariant dashboardModel READ dashboardModel)
+  Q_PROPERTY(bool showMessageBox READ getshowMessageBox WRITE setshowMessageBox NOTIFY showMessageBoxChanged )
+    Q_PROPERTY(QMessageBox::Icon messageIcon READ getmessageIcon NOTIFY messageIconChanged )
+    Q_PROPERTY(QString messageTitle READ getmessageTitle NOTIFY messageTitleChanged )
+    Q_PROPERTY(QString messageContent READ getmessageContent NOTIFY messageContentChanged )
 private:
   QMap<QString, QObject *> genericValues;
   QMap<QString, QList<QObject *>> genericListValues;
   explicit ApplicationClient(QObject *parent = nullptr);
   static ApplicationClient *_instance;
-
+  bool m_showMessageBox = false;
+  QMessageBox::Icon m_messageIcon = QMessageBox::Icon::NoIcon;
+  QString m_messageTitle = QLatin1String("");
+  QString m_messageContent = QLatin1String("");
   QThread inputThread;
   QQmlApplicationEngine engine;
   ButtonModel m_buttonModel;
   DashboardModel m_dashboardModel;
   QMap<QString, ApplicationClientPluginInterface* > plugins;
+
+  void setMessageTexts(const QString &content, const QString &title);
 
 public:
   void handleUserInput(QString);
@@ -45,6 +53,26 @@ public:
     return _instance;
   }
 
+  bool getshowMessageBox(){
+      return m_showMessageBox;
+  }
+
+  void setshowMessageBox(const bool & showMessageBox){
+      m_showMessageBox = showMessageBox;
+  }
+
+  QMessageBox::Icon getmessageIcon(){
+      return m_messageIcon;
+  }
+
+  QString getmessageTitle(){
+      return m_messageTitle;
+  }
+
+  QString getmessageContent(){
+      return m_messageContent;
+  }
+
   Q_INVOKABLE QVariant makeAccisable(QString column,int row, qx::IxModel * model);
 
   QVariant buttonModel(){
@@ -57,6 +85,10 @@ public:
 
 Q_SIGNALS:
   void finished();
+  void showMessageBoxChanged();
+  void messageIconChanged();
+  void messageTitleChanged();
+  void messageContentChanged();
 public Q_SLOTS:
   void start();
   void close();
@@ -79,5 +111,14 @@ public:
   // ApplicationClientInterface interface
 public:
   ApplicationClientPluginInterface *GetPlugin(const QString &pluginName) override;
+
+  // ApplicationClientInterface interface
+public:
+  void information(const QString &title, const QString &content) override;
+  void error(const QString &title, const QString &content) override;
+
+  // ApplicationClientInterface interface
+public:
+  void warning(const QString &title, const QString &content) override;
 };
 #endif // APPLICATION_H

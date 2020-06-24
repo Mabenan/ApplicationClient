@@ -18,25 +18,26 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Qml REQUIRED)
 find_package(Qt5Quick REQUIRED)
+find_package(Qt5Widgets REQUIRED)
 find_package(Qt5QuickCompiler)
 qtquick_compiler_add_resources(${RSC} herpAuthorizationModule.qrc)
 add_library(${target} SHARED ${SRC} ${RSC})
-qt5_use_modules(${target} Core Gui Qml Quick)
+qt5_use_modules(${target} Core Gui Qml Quick Widgets)
 target_link_libraries(${target} ApplicationClientInterface QxOrm)
 target_precompile_headers(${target}
  PUBLIC
   "ApplicationClientCore.Precompiled.h"
  )
 target_include_directories(${target}
- PUBLIC 
+ PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:${INCLUDE_FOLDER}>
  PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
-)    
+)
 set_property(TARGET ${target} APPEND PROPERTY PROPERTIES
-        INTERFACE_INCLUDE_DIRECTORIES 
+        INTERFACE_INCLUDE_DIRECTORIES
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     )

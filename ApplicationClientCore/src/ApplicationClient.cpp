@@ -9,6 +9,7 @@
 #include <QtQml>
 #include <closebutton.h>
 #include <QScreen>
+#include <QMessageBox>
 ApplicationClient *ApplicationClient::_instance = 0;
 ApplicationClient::ApplicationClient(QObject *parent)
     : ApplicationClientInterface(parent)  {
@@ -152,3 +153,39 @@ ApplicationClientPluginInterface *ApplicationClient::GetPlugin(const QString &pl
 }
 
 #include "moc_ApplicationClient.cpp"
+
+
+void ApplicationClient::setMessageTexts(const QString &content, const QString &title)
+{
+    this->m_messageTitle = title;
+    this->m_messageContent = content;
+    messageTitleChanged();
+    messageContentChanged();
+}
+
+void ApplicationClient::information(const QString &title, const QString &content)
+{
+    this->m_showMessageBox = true;
+    this->m_messageIcon = QMessageBox::Icon::Information;
+    setMessageTexts(content, title);
+    messageIconChanged();
+    showMessageBoxChanged();
+}
+
+void ApplicationClient::error(const QString &title, const QString &content)
+{
+    this->m_showMessageBox = true;
+    this->m_messageIcon = QMessageBox::Icon::Critical;
+    setMessageTexts(content, title);
+    messageIconChanged();
+    showMessageBoxChanged();
+}
+
+void ApplicationClient::warning(const QString &title, const QString &content)
+{
+    this->m_showMessageBox = true;
+    this->m_messageIcon = QMessageBox::Icon::Warning;
+    setMessageTexts(content, title);
+    messageIconChanged();
+    showMessageBoxChanged();
+}

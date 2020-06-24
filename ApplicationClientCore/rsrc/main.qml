@@ -1,6 +1,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.6
 import QtQuick.Window 2.6
+import QtQuick.Dialogs 1.2
 import com.applicationclient 1.0 as AppClient
 import "controls" as OwnControls
 
@@ -26,7 +27,16 @@ ApplicationWindow {
         timer.stop();
 
     }
-
+    MessageDialog {
+        id: messageDialog
+        visible: AppClient.App.showMessageBox
+        icon: AppClient.App.messageIcon
+        title: AppClient.App.messageTitle
+        text: AppClient.App.messageContent
+        onAccepted: {
+            AppClient.App.showMessageBox = false;
+        }
+    }
     Rectangle {
         id: rectangle
         visible: true
