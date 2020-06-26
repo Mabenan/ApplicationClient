@@ -10,9 +10,11 @@
 #include <closebutton.h>
 #include <QScreen>
 #include <QMessageBox>
+#include <QQuickStyle>
 ApplicationClient *ApplicationClient::_instance = 0;
 ApplicationClient::ApplicationClient(QObject *parent)
     : ApplicationClientInterface(parent)  {
+    QQuickStyle::setStyle("Material");
     qmlRegisterSingletonType(
         "com.applicationclient", 1, 0, "App",
         [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QJSValue {

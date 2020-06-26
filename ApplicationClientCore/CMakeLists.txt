@@ -18,11 +18,12 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Qml REQUIRED)
 find_package(Qt5Quick REQUIRED)
+find_package(Qt5QuickControls2 REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5QuickCompiler)
 qtquick_compiler_add_resources(${RSC} herpAuthorizationModule.qrc)
 add_library(${target} SHARED ${SRC} ${RSC})
-qt5_use_modules(${target} Core Gui Qml Quick Widgets)
+qt5_use_modules(${target} Core Gui Qml Quick Widgets QuickControls2)
 target_link_libraries(${target} ApplicationClientInterface QxOrm)
 target_precompile_headers(${target}
  PUBLIC
