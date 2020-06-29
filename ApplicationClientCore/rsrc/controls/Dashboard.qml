@@ -6,17 +6,17 @@ import com.applicationclient 1.0 as AppClient
 ScrollView {
     id: dashboard
     anchors.fill: parent
-    anchors.topMargin: toolBar.height
-    anchors.leftMargin: sideMenu.visible ? sideMenu.width : undefined
-    ScrollBar.horizontal.interactive: true
-    ScrollBar.vertical.interactive: true
-    height: window.height - toolBar.height;
+    width: parent.width
+    height: parent.height
+    clip: true
 
     ListView {
         id: dashboardView
+        anchors.fill: parent
         model: AppClient.App.dashboardModel
         width: parent.width
         height: childrenRect.height
+
         delegate: Loader {
             width: parent.width
             height: childrenRect.height

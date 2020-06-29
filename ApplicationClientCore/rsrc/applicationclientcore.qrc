@@ -4,5 +4,6 @@
         <file>controls/SideMenu.qml</file>
         <file>menu.png</file>
         <file>controls/Dashboard.qml</file>
+        <file>qtquickcontrols2.conf</file>
     </qresource>
 </RCC>

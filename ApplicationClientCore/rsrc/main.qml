@@ -14,9 +14,6 @@ ApplicationWindow {
     height: 667
     visible: true
 
-    Material.theme: Material.Dark
-    Material.accent: Material.Purple
-
     Timer {
         id: timer
     }
@@ -117,16 +114,32 @@ ApplicationWindow {
             action: drawerAction
         }
 
+    }
+
+    StackView {
+        id: content
+        anchors.fill: parent
+        width: parent.width
+        height: parent.height
+        background: Rectangle {
+            color: "green"
+        }
+        transform: Translate {
+            x: sideMenu.position * content.width * 0.25
+        }
         OwnControls.Dashboard {
             id: dashboard
+            background: Rectangle {
+                color: "red"
+            }
+            Material.background: Material.Red
             visible: true
         }
+    }
 
-        OwnControls.SideMenu {
-            id: sideMenu
-            visible: false
-        }
-
+    OwnControls.SideMenu {
+        id: sideMenu
+        visible: false
     }
 }
 
