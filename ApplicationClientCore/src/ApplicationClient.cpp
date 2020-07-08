@@ -11,9 +11,11 @@
 #include <QScreen>
 #include <QMessageBox>
 #include <QQuickStyle>
+#include <DashboardView.h>
 ApplicationClient *ApplicationClient::_instance = 0;
 ApplicationClient::ApplicationClient(QObject *parent)
     : ApplicationClientInterface(parent)  {
+    this->m_mainView = new DashboardView();
     QQuickStyle::setStyle("Material");
     qmlRegisterSingletonType(
         "com.applicationclient", 1, 0, "App",
@@ -190,4 +192,10 @@ void ApplicationClient::warning(const QString &title, const QString &content)
     setMessageTexts(content, title);
     messageIconChanged();
     showMessageBoxChanged();
+}
+
+void ApplicationClient::showView(QObject *view)
+{
+    this->m_mainView = view;
+    mainViewChanged();
 }

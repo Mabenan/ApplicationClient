@@ -127,13 +127,18 @@ ApplicationWindow {
         transform: Translate {
             x: sideMenu.position * content.width * 0.25
         }
-        OwnControls.Dashboard {
-            id: dashboard
-            background: Rectangle {
-                color: "red"
+
+        Loader{
+            source: AppClient.App.mainView.src
+            id: mainViewLoader
+            anchors.fill: parent
+            width: parent.width
+            height: parent.height
+            onLoaded: {
+                if(typeof mainViewLoader.item.setController === 'function'){
+                    mainViewLoader.item.setController(AppClient.App.mainView.controller);
+                }
             }
-            Material.background: Material.Red
-            visible: true
         }
     }
 

@@ -14,6 +14,8 @@
 #include <DashboardModel.h>
 #include <QxModelView.h>
 #include <QMessageBox>
+
+
 class APPLICATIONCLIENTCORE_EXPORT ApplicationClient
     : public ApplicationClientInterface {
   Q_OBJECT
@@ -23,6 +25,7 @@ class APPLICATIONCLIENTCORE_EXPORT ApplicationClient
     Q_PROPERTY(QMessageBox::Icon messageIcon READ getmessageIcon NOTIFY messageIconChanged )
     Q_PROPERTY(QString messageTitle READ getmessageTitle NOTIFY messageTitleChanged )
     Q_PROPERTY(QString messageContent READ getmessageContent NOTIFY messageContentChanged )
+    Q_PROPERTY(QVariant mainView READ getMainView NOTIFY mainViewChanged )
 private:
   QMap<QString, QObject *> genericValues;
   QMap<QString, QList<QObject *>> genericListValues;
@@ -37,6 +40,7 @@ private:
   ButtonModel m_buttonModel;
   DashboardModel m_dashboardModel;
   QMap<QString, ApplicationClientPluginInterface* > plugins;
+  QObject * m_mainView;
 
   void setMessageTexts(const QString &content, const QString &title);
 
@@ -73,6 +77,10 @@ public:
       return m_messageContent;
   }
 
+  QVariant getMainView(){
+      return QVariant::fromValue(m_mainView);
+  }
+
   Q_INVOKABLE QVariant makeAccisable(QString column,int row, qx::IxModel * model);
 
   QVariant buttonModel(){
@@ -89,6 +97,7 @@ Q_SIGNALS:
   void messageIconChanged();
   void messageTitleChanged();
   void messageContentChanged();
+  void mainViewChanged();
 public Q_SLOTS:
   void start();
   void close();
@@ -120,5 +129,9 @@ public:
   // ApplicationClientInterface interface
 public:
   void warning(const QString &title, const QString &content) override;
+
+  // ApplicationClientInterface interface
+public:
+  void showView(QObject *view) override;
 };
 #endif // APPLICATION_H

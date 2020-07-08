@@ -27,6 +27,7 @@ public:
   virtual void information(const QString &title, const QString &content)= 0;
   virtual void error(const QString &title, const QString &content)= 0;
   virtual void warning(const QString &title, const QString &content)= 0;
+  virtual void showView(QObject * view) = 0;
 
   virtual ApplicationClientPluginInterface * GetPlugin(const QString &pluginName) = 0;
 };
