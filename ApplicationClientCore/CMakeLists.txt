@@ -25,10 +25,13 @@ qtquick_compiler_add_resources(${RSC} herpAuthorizationModule.qrc)
 add_library(${target} SHARED ${SRC} ${RSC})
 qt5_use_modules(${target} Core Gui Qml Quick Widgets QuickControls2)
 target_link_libraries(${target} ApplicationClientInterface QxOrm)
+
+if(COMMAND target_precompile_headers)
 target_precompile_headers(${target}
  PUBLIC
   "ApplicationClientCore.Precompiled.h"
  )
+ endif()
 target_include_directories(${target}
  PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
